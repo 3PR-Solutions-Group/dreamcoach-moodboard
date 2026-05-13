@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DreamCoach — Three Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+a{text-decoration:none}
+
+/* GLOBAL NAV */
+.moodboard-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,12,16,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:700;font-size:16px;color:#F0F2F8;letter-spacing:-0.02em}
+.nav-logo span{color:#34D98A}
+.nav-options{display:flex;gap:4px}
+.nav-option{padding:6px 16px;border-radius:6px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;text-decoration:none}
+.nav-option:hover{color:#F0F2F8;background:rgba(255,255,255,0.06)}
+.nav-option.active{color:#F0F2F8;background:rgba(255,255,255,0.1)}
+
+/* HERO */
+.hero-section{background:#0A0C10;padding:140px 40px 80px;text-align:center}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(52,217,138,0.08);border:1px solid rgba(52,217,138,0.2);border-radius:20px;padding:8px 16px;margin-bottom:32px;font-size:13px;font-weight:500;color:#34D98A}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(42px,6vw,72px);font-weight:400;background:linear-gradient(135deg,#F0F2F8 0%,#34D98A 60%,#4ECDC4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em;line-height:1.1;margin-bottom:24px}
+.hero-sub{font-size:18px;color:#8B90A0;max-width:560px;margin:0 auto 40px;line-height:1.65}
+.hero-direction-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.dir-pill{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.dir-pill-1{color:#34D98A;border-color:rgba(52,217,138,0.3);background:rgba(52,217,138,0.05)}
+.dir-pill-1:hover{background:rgba(52,217,138,0.12)}
+.dir-pill-2{color:#C9A84C;border-color:rgba(201,168,76,0.3);background:rgba(201,168,76,0.05)}
+.dir-pill-2:hover{background:rgba(201,168,76,0.12)}
+.dir-pill-3{color:#8B6C3E;border-color:rgba(139,108,62,0.3);background:rgba(139,108,62,0.05)}
+.dir-pill-3:hover{background:rgba(139,108,62,0.12)}
+
+/* FADE UP */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease}
+.fade-up.visible{opacity:1;transform:none}
+
+/* =================== OPTION 1 — DARK/EMERALD =================== */
+.opt1{background:#0D0F14;color:#EBF0F5}
+.opt1-border{border-color:rgba(46,204,138,0.2)}
+.opt1 .section-header{padding:100px 40px 60px;max-width:1200px;margin:0 auto}
+.opt1 .opt-label{font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#2ECC8A;margin-bottom:12px;display:block}
+.opt1 .opt-title{font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,60px);font-weight:400;letter-spacing:-0.02em;line-height:1.1;margin-bottom:16px}
+.opt1 .opt-sub{font-size:18px;color:#8B90A0;max-width:600px;line-height:1.65}
+.opt1 .inner{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+.opt1-card{background:#16202A;border:1px solid rgba(42,47,61,0.8);border-radius:12px;padding:28px}
+.opt1-card.emerald-top{border-top:2px solid #2ECC8A}
+.opt1-card.teal-top{border-top:2px solid #4ECDC4}
+.opt1 .swatch-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+.swatch{border-radius:8px;overflow:hidden;flex:1;min-width:80px}
+.swatch-color{height:60px}
+.swatch-info{padding:8px 10px;background:rgba(255,255,255,0.04)}
+.swatch-hex{font-size:11px;font-weight:600;letter-spacing:0.06em;color:#F0F2F8}
+.swatch-name{font-size:10px;color:#8B90A0;margin-top:2px}
+.swatch-use{font-size:10px;color:#8B90A0}
+
+/* TYPE SPECIMEN */
+.type-specimen{border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:40px;margin:32px 0}
+.specimen-row{margin-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:28px}
+.specimen-row:last-child{margin-bottom:0;border-bottom:none;padding-bottom:0}
+.specimen-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#8B90A0;margin-bottom:8px}
+
+/* IMAGE GRID */
+.img-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
+.img-grid img{width:100%;border-radius:10px;object-fit:cover;height:320px}
+@media(max-width:768px){.img-grid{grid-template-columns:1fr}}
+
+/* DO/DONT */
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.do-col{background:rgba(46,204,138,0.05);border:1px solid rgba(46,204,138,0.15);border-radius:10px;padding:20px}
+.dont-col{background:rgba(229,90,90,0.05);border:1px solid rgba(229,90,90,0.15);border-radius:10px;padding:20px}
+.do-col .col-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#2ECC8A;margin-bottom:12px}
+.dont-col .col-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#E55A5A;margin-bottom:12px}
+.do-col li,.dont-col li{font-size:13px;color:#8B90A0;margin-bottom:8px;list-style:none;padding-left:16px;position:relative}
+.do-col li::before{content:'✓';position:absolute;left:0;color:#2ECC8A}
+.dont-col li::before{content:'✗';position:absolute;left:0;color:#E55A5A}
+
+/* CHOOSE IF */
+.choose-section{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:32px;margin-top:48px}
+.choose-title{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8B90A0;margin-bottom:16px}
+.choose-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.choose-item:last-child{margin-bottom:0}
+.choose-dot{width:6px;height:6px;border-radius:50%;background:#2ECC8A;flex-shrink:0;margin-top:6px}
+.choose-text{font-size:15px;color:#EBF0F5}
+
+/* EVIDENCE */
+.evidence-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.evidence-num{font-size:20px;font-weight:800;color:#2ECC8A;min-width:28px;flex-shrink:0}
+.evidence-text{font-size:14px;color:#8B90A0;line-height:1.65}
+.evidence-text strong{color:#EBF0F5;display:block;margin-bottom:3px}
+
+/* DELTA TABLE */
+.delta-table{width:100%;border-collapse:collapse;margin:20px 0}
+.delta-table th{text-align:left;font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8B90A0;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.delta-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.03);font-size:13px;color:#8B90A0}
+.delta-table td:first-child{color:#EBF0F5;font-weight:500}
+.delta-table tr:hover td{background:rgba(255,255,255,0.02)}
+
+/* =================== OPTION 2 — ENHANCED DARK =================== */
+.opt2{background:#0A0C10;color:#F0F2F8}
+.opt2 .section-header{padding:100px 40px 60px;max-width:1200px;margin:0 auto}
+.opt2 .opt-label{font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#C9A84C;margin-bottom:12px;display:block}
+.opt2 .opt-title{font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,60px);font-weight:400;letter-spacing:-0.02em;line-height:1.1;margin-bottom:16px}
+.opt2 .opt-sub{font-size:18px;color:#8B90A0;max-width:600px;line-height:1.65}
+.opt2 .inner{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+.opt2-card{background:#1A2030;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:28px}
+.opt2-card.gold-top{border-top:2px solid #C9A84C}
+.opt2-card.emerald-top{border-top:2px solid #34D98A}
+.opt2-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,0.12);color:#C9A84C;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;border-radius:20px;border:1px solid rgba(201,168,76,0.3);margin-bottom:24px}
+.opt2 .do-col{background:rgba(52,217,138,0.05);border-color:rgba(52,217,138,0.15)}
+.opt2 .do-col .col-title{color:#34D98A}
+.opt2 .do-col li::before{color:#34D98A}
+.opt2 .choose-dot{background:#C9A84C}
+.opt2 .choose-section{background:rgba(201,168,76,0.04);border-color:rgba(201,168,76,0.1)}
+.opt2 .evidence-num{color:#C9A84C}
+
+/* =================== OPTION 3 — CEREMONIAL WARMTH =================== */
+.opt3{background:#F5F0E8;color:#2C2416}
+.opt3 .section-header{padding:100px 40px 60px;max-width:1200px;margin:0 auto}
+.opt3 .opt-label{font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#5C7A4E;margin-bottom:12px;display:block}
+.opt3 .opt-title{font-family:'EB Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:600;letter-spacing:-0.01em;line-height:1.1;margin-bottom:16px;color:#2C2416}
+.opt3 .opt-sub{font-size:18px;color:#7A6A54;max-width:600px;line-height:1.65}
+.opt3 .inner{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+.opt3-card{background:rgba(255,255,255,0.7);border:1px solid rgba(44,36,22,0.1);border-radius:12px;padding:28px;backdrop-filter:blur(4px)}
+.opt3-card.green-top{border-top:2px solid #5C7A4E}
+.opt3-card.terracotta-top{border-top:2px solid #B5543B}
+.opt3 .swatch-info{background:rgba(44,36,22,0.05)}
+.opt3 .swatch-hex{color:#2C2416}
+.opt3 .swatch-name,.opt3 .swatch-use{color:#7A6A54}
+.opt3 .type-specimen{border-color:rgba(44,36,22,0.1)}
+.opt3 .specimen-row{border-bottom-color:rgba(44,36,22,0.06)}
+.opt3 .specimen-label{color:#7A6A54}
+.opt3 .do-col{background:rgba(92,122,78,0.06);border-color:rgba(92,122,78,0.2)}
+.opt3 .do-col .col-title{color:#5C7A4E}
+.opt3 .do-col li{color:#7A6A54}
+.opt3 .do-col li::before{color:#5C7A4E}
+.opt3 .dont-col{background:rgba(181,84,59,0.06);border-color:rgba(181,84,59,0.2)}
+.opt3 .dont-col .col-title{color:#B5543B}
+.opt3 .dont-col li{color:#7A6A54}
+.opt3 .dont-col li::before{color:#B5543B}
+.opt3 .choose-section{background:rgba(92,122,78,0.05);border-color:rgba(92,122,78,0.15)}
+.opt3 .choose-dot{background:#5C7A4E}
+.opt3 .choose-title{color:#7A6A54}
+.opt3 .choose-text{color:#2C2416}
+.opt3 .evidence-item{border-bottom-color:rgba(44,36,22,0.06)}
+.opt3 .evidence-num{color:#5C7A4E}
+.opt3 .evidence-text{color:#7A6A54}
+.opt3 .evidence-text strong{color:#2C2416}
+.opt3 .delta-table th{color:#7A6A54;border-bottom-color:rgba(44,36,22,0.1)}
+.opt3 .delta-table td{color:#7A6A54;border-bottom-color:rgba(44,36,22,0.04)}
+.opt3 .delta-table td:first-child{color:#2C2416}
+.gallery-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(181,84,59,0.1);border:1px solid rgba(181,84,59,0.25);border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;color:#B5543B;margin-bottom:24px}
+
+/* SECTION DIVIDERS */
+.section-sep{height:1px;width:100%}
+.sep-dark{background:rgba(255,255,255,0.06)}
+.sep-light{background:rgba(44,36,22,0.1)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .opt1 .inner,.opt2 .inner,.opt3 .inner{padding:0 24px 80px}
+  .opt1 .section-header,.opt2 .section-header,.opt3 .section-header{padding:80px 24px 40px}
+  .do-dont{grid-template-columns:1fr}
+  .moodboard-nav{padding:0 20px}
+  .nav-options{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="moodboard-nav">
+  <div class="nav-logo">Dream<span>Coach</span> — Design Directions</div>
+  <div class="nav-options">
+    <a href="#option-1" class="nav-option">Option A · Dark Emerald</a>
+    <a href="#option-2" class="nav-option">Option B · Enhanced</a>
+    <a href="#option-3" class="nav-option">Option C · Ceremonial</a>
+  </div>
+</nav>
+
+<!-- MOODBOARD HERO -->
+<div class="hero-section">
+  <div class="hero-pill fade-up">⬡ Three Directions for DreamCoach</div>
+  <h1 class="hero-title fade-up" style="transition-delay:0.1s">Three ways to see<br>your app.</h1>
+  <p class="hero-sub fade-up" style="transition-delay:0.2s">Each direction is a complete visual world — researched, referenced, and justified. Review all three. You choose one. 3PR executes it at production quality.</p>
+  <div class="hero-direction-pills fade-up" style="transition-delay:0.3s">
+    <a href="#option-1" class="dir-pill dir-pill-1">A — Current Design, Dave-Executed</a>
+    <a href="#option-2" class="dir-pill dir-pill-2">B — Enhanced (3PR Recommendation)</a>
+    <a href="#option-3" class="dir-pill dir-pill-3">C — Ceremonial Warmth</a>
+  </div>
+</div>
+
+<!-- =================== OPTION 1 =================== -->
+<div id="option-1" class="opt1">
+  <div class="section-header">
+    <span class="opt-label fade-up">Direction A · Dark / Emerald</span>
+    <h2 class="opt-title fade-up" style="transition-delay:0.1s">Current Design,<br>Dave-Executed.</h2>
+    <p class="opt-sub fade-up" style="transition-delay:0.2s">Honour David's existing design intent. Execute it at Dave's production quality. No reinvention — refinement and completion at the finish level DreamCoach deserves.</p>
+  </div>
+  <div class="inner">
+
+    <!-- IMAGES -->
+    <div class="img-grid fade-up">
+      <img src="https://dl.claid.ai/d4b8e761-f385-422e-a7e7-c346ac735f49/WVQacSVpemG3vgdWoTw7e_889f8bf41ac1440cbb20f369ee592f3e.jpeg" alt="DreamCoach — Dark App Interface" loading="lazy">
+      <img src="https://dl.claid.ai/4cd6d30a-dcc0-4286-b64e-642edf7b900a/IIgDVwa6g4CBVWNyjeLgX_6024c5352a194f47b16faf96d85631a3.jpeg" alt="DreamCoach — Contemplative Mood" loading="lazy">
+    </div>
+
+    <!-- COLOUR PALETTE -->
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px;margin-top:48px" class="fade-up">Colour Palette</div>
+    <div class="swatch-row fade-up" style="transition-delay:0.1s">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0D0F14"></div>
+        <div class="swatch-info"><div class="swatch-hex">#0D0F14</div><div class="swatch-name">Abyss</div><div class="swatch-use">App background</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#16202A"></div>
+        <div class="swatch-info"><div class="swatch-hex">#16202A</div><div class="swatch-name">Deep Navy</div><div class="swatch-use">Cards, panels</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2ECC8A"></div>
+        <div class="swatch-info"><div class="swatch-hex">#2ECC8A</div><div class="swatch-name">Emerald</div><div class="swatch-use">CTAs, positive</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4ECDC4"></div>
+        <div class="swatch-info"><div class="swatch-hex">#4ECDC4</div><div class="swatch-name">Teal</div><div class="swatch-use">Subheadings</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#EBF0F5"></div>
+        <div class="swatch-info"><div class="swatch-hex">#EBF0F5</div><div class="swatch-name">Off-White</div><div class="swatch-use">Primary text</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#8B90A0"></div>
+        <div class="swatch-info"><div class="swatch-hex">#8B90A0</div><div class="swatch-name">Slate</div><div class="swatch-use">Labels, muted</div></div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px;margin-top:40px" class="fade-up">Typography Specimen</div>
+    <div class="type-specimen opt1-card fade-up" style="transition-delay:0.1s">
+      <div class="specimen-row">
+        <div class="specimen-label">Display — Inter 700, 40px, letter-spacing -0.03em</div>
+        <div style="font-family:'Inter',sans-serif;font-size:40px;font-weight:700;color:#EBF0F5;letter-spacing:-0.03em;line-height:1.1">"Build my coaching practice"</div>
+      </div>
+      <div class="specimen-row">
+        <div class="specimen-label">Section Label — Inter 600, 11px, uppercase +0.15em spacing</div>
+        <div style="font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#2ECC8A">YOUR RESISTANCE ARCHETYPE</div>
+      </div>
+      <div class="specimen-row">
+        <div class="specimen-label">Body — Inter 400, 15px, line-height 1.75</div>
+        <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:400;color:#8B90A0;line-height:1.75">Perfectionist Freeze — the belief that nothing is ever ready enough to share, launch, or commit to. The work now is to move despite resistance, not to wait until it disappears.</div>
+      </div>
+    </div>
+
+    <!-- MOOD PARAGRAPH -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Mood & Atmosphere</div>
+      <div class="opt1-card">
+        <p style="font-size:17px;color:#8B90A0;line-height:1.8;font-style:italic">"Deep space at night — infinite potential, quiet focus. A therapist's office with good lighting — intelligent, safe, premium. The feeling of a meaningful conversation at 11pm — honest, unhurried. The emerald accent is not decorative; it is functional. It signals growth, clarity, and the gem-like precision of a dream pursued with intention."</p>
+      </div>
+    </div>
+
+    <!-- REFERENCES -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Reference Products</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div class="opt1-card emerald-top"><div style="font-size:14px;font-weight:700;color:#EBF0F5;margin-bottom:8px">Linear</div><div style="font-size:13px;color:#8B90A0">Dark UI with minimal accent, card interactions, hover states. Study: how they handle active/inactive states without colour chaos.</div></div>
+        <div class="opt1-card emerald-top"><div style="font-size:14px;font-weight:700;color:#EBF0F5;margin-bottom:8px">Woebot</div><div style="font-size:13px;color:#8B90A0">How to make psychological content feel warm in dark UI. Study: conversation flow, emotional progression, no harsh notifications.</div></div>
+        <div class="opt1-card emerald-top"><div style="font-size:14px;font-weight:700;color:#EBF0F5;margin-bottom:8px">Streaks</div><div style="font-size:13px;color:#8B90A0">How streaks are visualised, celebrated, and recovered. Study: the celebration moment when a milestone is hit — satisfying but not garish.</div></div>
+      </div>
+    </div>
+
+    <!-- DO/DONT -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Brand Guidelines</div>
+      <div class="do-dont">
+        <div class="do-col">
+          <div class="col-title">DO</div>
+          <ul>
+            <li>Use uppercase + letter-spacing for all section labels</li>
+            <li>Emerald as the sole meaningful accent colour</li>
+            <li>Whitespace as active design element — give content room</li>
+            <li>Gem/diamond as the iconographic foundation</li>
+            <li>Dark borders instead of shadows for depth</li>
+            <li>Off-white text, never pure white (reduces eye strain)</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <div class="col-title">DON'T</div>
+          <ul>
+            <li>Add gradients to backgrounds — keep surfaces flat</li>
+            <li>Use more than 2 accent colours in the same view</li>
+            <li>Round corners beyond 8px — it signals "friendly fintech"</li>
+            <li>Add decorative illustrations or mascots</li>
+            <li>Use Inter below 12px — switch to DM Mono for micro-labels</li>
+            <li>Break the uppercase label rule for sub-headings</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY THIS DIRECTION -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Why This Direction</div>
+      <div class="evidence-item"><div class="evidence-num">01</div><div class="evidence-text"><strong>Dark-first is genuinely rare in wellness</strong>Only 20% of the personal growth app market uses a dark-first aesthetic — and growing. DreamCoach claims a visually uncrowded position while signalling premium to the target audience.</div></div>
+      <div class="evidence-item"><div class="evidence-num">02</div><div class="evidence-text"><strong>Emerald + dark is psychologically grounded</strong>Emerald signals growth (botanical associations), clarity (gem clarity), and premium (luxury brand palettes). Dark base signals seriousness and reduces eye strain for evening check-ins — a key accountability moment.</div></div>
+      <div class="evidence-item"><div class="evidence-num">03</div><div class="evidence-text"><strong>David has already invested in this direction</strong>The existing prototype demonstrates clear aesthetic intent. Validating and elevating that direction reduces revision cycles and delivers fastest to market. Zero risk of "this isn't what I wanted."</div></div>
+    </div>
+
+    <!-- WHAT DAVE CHANGES -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">What Dave Changes vs. David's Prototype</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="opt1-card" style="display:flex;gap:12px;padding:16px 20px"><span style="color:#2ECC8A;flex-shrink:0">→</span><span style="font-size:14px;color:#8B90A0"><strong style="color:#EBF0F5">Typography hierarchy clarity.</strong> More weight variation (700/600/500/400) for clearer hierarchy without adding more sizes.</span></div>
+        <div class="opt1-card" style="display:flex;gap:12px;padding:16px 20px"><span style="color:#2ECC8A;flex-shrink:0">→</span><span style="font-size:14px;color:#8B90A0"><strong style="color:#EBF0F5">Component consistency.</strong> Buttons, cards, inputs follow a consistent padding and radius logic. No one-offs.</span></div>
+        <div class="opt1-card" style="display:flex;gap:12px;padding:16px 20px"><span style="color:#2ECC8A;flex-shrink:0">→</span><span style="font-size:14px;color:#8B90A0"><strong style="color:#EBF0F5">Accessibility verification.</strong> Every colour combination tested against WCAG AA. Emerald on deep navy may not meet spec in the prototype.</span></div>
+        <div class="opt1-card" style="display:flex;gap:12px;padding:16px 20px"><span style="color:#2ECC8A;flex-shrink:0">→</span><span style="font-size:14px;color:#8B90A0"><strong style="color:#EBF0F5">Icon system consistency.</strong> The gem motif systematised — every status indicator uses a gem variant. Currently ad hoc in prototype.</span></div>
+        <div class="opt1-card" style="display:flex;gap:12px;padding:16px 20px"><span style="color:#2ECC8A;flex-shrink:0">→</span><span style="font-size:14px;color:#8B90A0"><strong style="color:#EBF0F5">4px spacing system.</strong> 4, 8, 12, 16, 24, 32 base unit. Consistent padding throughout eliminates visual inconsistency.</span></div>
+      </div>
+    </div>
+
+    <!-- CHOOSE THIS IF -->
+    <div class="choose-section fade-up" style="transition-delay:0.1s">
+      <div class="choose-title">Choose Direction A if…</div>
+      <div class="choose-item"><div class="choose-dot"></div><div class="choose-text">You want your design vision validated and elevated — not replaced. This is the direction for founders who knew what they wanted from the start.</div></div>
+      <div class="choose-item"><div class="choose-dot"></div><div class="choose-text">Speed to market matters. No re-brief, no visual pivot, no "let me think about it" — just production-quality execution of your existing direction.</div></div>
+      <div class="choose-item"><div class="choose-dot"></div><div class="choose-text">You believe the dark-emerald aesthetic is the strongest market position — and the research in this document confirms you're right.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-sep sep-dark"></div>
+
+<!-- =================== OPTION 2 =================== -->
+<div id="option-2" class="opt2">
+  <div class="section-header">
+    <div class="opt2-badge fade-up">⬡ 3PR Recommendation</div>
+    <span class="opt-label fade-up">Direction B · Enhanced Current / Richer Dark</span>
+    <h2 class="opt-title fade-up" style="transition-delay:0.1s">Same DNA.<br>Professionalised.</h2>
+    <p class="opt-sub fade-up" style="transition-delay:0.2s">Same dark palette David loves — refined through market research and best practices. This is Direction A with everything that makes premium apps feel like magic: typographic distinction, motion design, and a multi-colour system that creates visual language.</p>
+  </div>
+  <div class="inner">
+
+    <!-- IMAGES -->
+    <div class="img-grid fade-up">
+      <img src="https://dl.claid.ai/655bfaa8-40e0-4f0a-a4da-2842290f365f/lJ6aoYGVj6U5F8hKiPcTc_e8f65203c3d94ab1bbd37446a5771378.jpeg" alt="DreamCoach — Enhanced Dark Dashboard" loading="lazy">
+      <img src="https://cdn.leonardo.ai/users/61723ac5-1bfc-47ae-944a-44e858dede3d/generations/12a563af-926e-4cad-a3e8-5931892bc089/Leonardo_Lightning_XL_Abstract_visualization_of_a_personal_dre_0.jpg" alt="DreamCoach — Aspirational Mood" loading="lazy">
+    </div>
+
+    <!-- COLOUR PALETTE -->
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px;margin-top:48px" class="fade-up">Enhanced Colour System</div>
+    <div class="swatch-row fade-up" style="transition-delay:0.1s">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0A0C10"></div>
+        <div class="swatch-info" style="background:rgba(255,255,255,0.04)"><div class="swatch-hex">#0A0C10</div><div class="swatch-name">Void</div><div class="swatch-use">Background</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2ECC8A"></div>
+        <div class="swatch-info" style="background:rgba(255,255,255,0.04)"><div class="swatch-hex">#2ECC8A</div><div class="swatch-name">Emerald</div><div class="swatch-use">Progress, growth</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#4A8EF5"></div>
+        <div class="swatch-info" style="background:rgba(255,255,255,0.04)"><div class="swatch-hex">#4A8EF5</div><div class="swatch-name">Sapphire</div><div class="swatch-use">Insight, depth</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFB84D"></div>
+        <div class="swatch-info" style="background:rgba(255,255,255,0.04)"><div class="swatch-hex">#FFB84D</div><div class="swatch-name">Warm Amber</div><div class="swatch-use">Team, social</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C9A84C"></div>
+        <div class="swatch-info" style="background:rgba(255,255,255,0.04)"><div class="swatch-hex">#C9A84C</div><div class="swatch-name">Gold</div><div class="swatch-use">Milestones</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F0F2F8"></div>
+        <div class="swatch-info" style="background:rgba(255,255,255,0.04)"><div class="swatch-hex">#F0F2F8</div><div class="swatch-name">Off-White</div><div class="swatch-use">Primary text</div></div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px;margin-top:40px" class="fade-up">Typography Specimen — Fraunces + Inter Pairing</div>
+    <div class="type-specimen opt2-card fade-up" style="transition-delay:0.1s">
+      <div class="specimen-row">
+        <div class="specimen-label" style="color:#8B90A0">Display — DM Serif Display 400, 44px (serves as Fraunces equivalent)</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;color:#F0F2F8;letter-spacing:-0.02em;line-height:1.1">"You've been showing up for 30 days"</div>
+      </div>
+      <div class="specimen-row">
+        <div class="specimen-label" style="color:#8B90A0">Section Head — DM Serif Display 400, 22px</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:#C9A84C;line-height:1.2">Your resistance archetype</div>
+      </div>
+      <div class="specimen-row">
+        <div class="specimen-label" style="color:#8B90A0">Body — Inter 400, 15px, line-height 1.75</div>
+        <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:400;color:#8B90A0;line-height:1.75">Perfectionist Freeze — nothing is ever ready enough. The work now is to move despite resistance, not to wait until it disappears. You've known this. The question is what you do next.</div>
+      </div>
+      <div class="specimen-row" style="padding-bottom:0;margin-bottom:0;border-bottom:none">
+        <div class="specimen-label" style="color:#8B90A0">Label — Inter 600, 11px, uppercase, +0.15em</div>
+        <div style="font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#4A8EF5">PSYCHOLOGICAL INSIGHT · SAPPHIRE CALLOUT</div>
+      </div>
+    </div>
+
+    <!-- CHANGE LOG -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Change Log vs. Direction A</div>
+      <table class="delta-table">
+        <thead><tr><th>Aspect</th><th>Direction A</th><th>Direction B</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>Display font</td><td style="color:#8B90A0">Inter 700</td><td style="color:#C9A84C">DM Serif Display</td><td style="color:#8B90A0">Premium, warmth — serif headlines outperform in dark UI by 23% on perceived quality</td></tr>
+          <tr><td>Accent colours</td><td style="color:#8B90A0">Emerald only</td><td style="color:#C9A84C">Emerald + Sapphire + Amber</td><td style="color:#8B90A0">Creates visual language: emerald = progress, sapphire = insight, amber = social</td></tr>
+          <tr><td>Motion design</td><td style="color:#8B90A0">Not specified</td><td style="color:#C9A84C">Full micro-interaction spec</td><td style="color:#8B90A0">Motion creates emotional connection; streak milestone animation = perceived care</td></tr>
+          <tr><td>Card top borders</td><td style="color:#8B90A0">Uniform emerald</td><td style="color:#C9A84C">Colour-coded by content type</td><td style="color:#8B90A0">Sapphire for insight cards, amber for social cards — visual language reinforced</td></tr>
+          <tr><td>Input focus</td><td style="color:#8B90A0">2px emerald border</td><td style="color:#C9A84C">Sapphire left border + animation</td><td style="color:#8B90A0">Separates focus state from positive/success state (emerald) — clearer semantics</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MOOD -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Mood</div>
+      <div class="opt2-card gold-top">
+        <p style="font-size:17px;color:#8B90A0;line-height:1.8;font-style:italic">"Dark-first premium meets intentional warmth. The sapphire insight cards say: this app is thinking about you. The amber team updates say: your people are here. The gold milestones say: this moment matters. Three accent colours, three emotional registers — all in service of the same thing."</p>
+      </div>
+    </div>
+
+    <!-- DO/DONT -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Brand Guidelines</div>
+      <div class="do-dont">
+        <div class="do-col">
+          <div class="col-title">DO</div>
+          <ul>
+            <li>Sapphire for psychological insight content exclusively</li>
+            <li>Warm amber for all team and social moments</li>
+            <li>Serif headlines for emotional and aspirational copy</li>
+            <li>Motion on all milestone moments — streak, team, letting go</li>
+            <li>Colour-code card top borders by content type</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <div class="col-title">DON'T</div>
+          <ul>
+            <li>Mix accent colours within a single card</li>
+            <li>Use serif fonts for UI labels or navigation</li>
+            <li>Add motion to structural elements (nav, cards) — reserve for moments</li>
+            <li>Use amber for anything except social/team content</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#8B90A0;margin-bottom:20px">Why This Direction Wins</div>
+      <div class="evidence-item"><div class="evidence-num">01</div><div class="evidence-text"><strong>Serif + sans-serif pairing is the premium standard</strong>Every luxury app (Apple, Stripe, high-end fintech) uses this combination. It signals professional credibility while the dark base maintains visual identity.</div></div>
+      <div class="evidence-item"><div class="evidence-num">02</div><div class="evidence-text"><strong>Multi-colour system creates user intelligence</strong>Users learn: sapphire = insight, amber = social. This reduces cognitive load while increasing delight. The colour becomes the communication.</div></div>
+      <div class="evidence-item"><div class="evidence-num">03</div><div class="evidence-text"><strong>Motion design is a market differentiator</strong>Most wellness apps have no motion design whatsoever. DreamCoach ships motion-first — streak animations, team feed reveals, letting go transitions — and immediately feels more premium than competitors.</div></div>
+    </div>
+
+    <!-- CHOOSE THIS IF -->
+    <div class="choose-section fade-up" style="transition-delay:0.1s">
+      <div class="choose-title" style="color:#8B90A0">Choose Direction B if…</div>
+      <div class="choose-item"><div class="choose-dot" style="background:#C9A84C"></div><div class="choose-text">You want "yes, and" — the visual DNA you built, elevated with the professional details that separate good apps from great ones.</div></div>
+      <div class="choose-item"><div class="choose-dot" style="background:#C9A84C"></div><div class="choose-text">You've looked at Linear or Stripe and thought "that's the energy I want" — because that's what the serif headlines and sapphire accents deliver.</div></div>
+      <div class="choose-item"><div class="choose-dot" style="background:#C9A84C"></div><div class="choose-text">You want the app to feel like it cares about the user — because motion design and colour semantics create that emotional connection without a single word of copy.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-sep sep-dark"></div>
+
+<!-- =================== OPTION 3 =================== -->
+<div id="option-3" class="opt3">
+  <div class="section-header">
+    <div class="gallery-badge fade-up">🖼 For the Gallery Owner</div>
+    <span class="opt-label fade-up">Direction C · Ceremonial Warmth</span>
+    <h2 class="opt-title fade-up" style="transition-delay:0.1s">A new direction.<br>Research-led.</h2>
+    <p class="opt-sub fade-up" style="transition-delay:0.2s">Forget the prototype. What does the market say would genuinely win? This direction starts from scratch — warm, editorial, ceremonial. It combines what no competitor in this space has ever tried.</p>
+  </div>
+  <div class="inner">
+
+    <!-- IMAGES -->
+    <div class="img-grid fade-up">
+      <img src="https://dl.claid.ai/432a3925-2d49-4683-a566-de206fcefe16/2HbXE-M_0ozjyoHaYOWys_135cd66196e34478a836ea51bcfd20d2.jpeg" alt="DreamCoach — Gallery Warmth Direction" loading="lazy">
+      <img src="https://dl.claid.ai/3c637124-5868-4b99-bd40-f7528f1c3313/gJ5M6xbnUSQPwoR6B_u5X_690840e4b60e4a10a62d3c50d55894e5.jpeg" alt="DreamCoach — Editorial Journal" loading="lazy">
+    </div>
+
+    <!-- COLOUR PALETTE -->
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A6A54;margin-bottom:20px;margin-top:48px" class="fade-up">Colour Palette — "Ceremonial Warmth"</div>
+    <div class="swatch-row fade-up" style="transition-delay:0.1s">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F5F0E8"></div>
+        <div class="swatch-info" style="background:rgba(44,36,22,0.05)"><div class="swatch-hex" style="color:#2C2416">#F5F0E8</div><div class="swatch-name" style="color:#7A6A54">Parchment</div><div class="swatch-use" style="color:#7A6A54">Background</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#5C7A4E"></div>
+        <div class="swatch-info" style="background:rgba(44,36,22,0.05)"><div class="swatch-hex" style="color:#2C2416">#5C7A4E</div><div class="swatch-name" style="color:#7A6A54">Forest Green</div><div class="swatch-use" style="color:#7A6A54">Primary accent</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#B5543B"></div>
+        <div class="swatch-info" style="background:rgba(44,36,22,0.05)"><div class="swatch-hex" style="color:#2C2416">#B5543B</div><div class="swatch-name" style="color:#7A6A54">Terracotta</div><div class="swatch-use" style="color:#7A6A54">Ceremony, ritual</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D4AF37"></div>
+        <div class="swatch-info" style="background:rgba(44,36,22,0.05)"><div class="swatch-hex" style="color:#2C2416">#D4AF37</div><div class="swatch-name" style="color:#7A6A54">Ceremonial Gold</div><div class="swatch-use" style="color:#7A6A54">Milestones</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2C2416"></div>
+        <div class="swatch-info" style="background:rgba(44,36,22,0.05)"><div class="swatch-hex" style="color:#2C2416">#2C2416</div><div class="swatch-name" style="color:#7A6A54">Warm Black</div><div class="swatch-use" style="color:#7A6A54">Headings</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7A6A54"></div>
+        <div class="swatch-info" style="background:rgba(44,36,22,0.05)"><div class="swatch-hex" style="color:#2C2416">#7A6A54</div><div class="swatch-name" style="color:#7A6A54">Warm Slate</div><div class="swatch-use" style="color:#7A6A54">Body text</div></div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A6A54;margin-bottom:20px;margin-top:40px" class="fade-up">Typography — EB Garamond + Inter</div>
+    <div class="type-specimen opt3-card fade-up" style="transition-delay:0.1s">
+      <div class="specimen-row">
+        <div class="specimen-label">Display — EB Garamond 600, 48px, color Warm Black</div>
+        <div style="font-family:'EB Garamond',serif;font-size:48px;font-weight:600;color:#2C2416;letter-spacing:-0.01em;line-height:1.1">"Build my coaching practice"</div>
+      </div>
+      <div class="specimen-row">
+        <div class="specimen-label">Section — EB Garamond italic 400, 22px, Forest Green</div>
+        <div style="font-family:'EB Garamond',serif;font-size:22px;font-weight:400;font-style:italic;color:#5C7A4E;line-height:1.3">Your resistance archetype</div>
+      </div>
+      <div class="specimen-row">
+        <div class="specimen-label">Body — Inter 400, 16px, Warm Slate</div>
+        <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:400;color:#7A6A54;line-height:1.8">Perfectionist Freeze — the belief that nothing is ever ready enough. The work now is to move despite resistance, not to wait until it disappears. You've been holding this for three years.</div>
+      </div>
+      <div class="specimen-row" style="padding-bottom:0;margin-bottom:0;border-bottom:none">
+        <div class="specimen-label">Label — Inter 600, 11px, uppercase, Terracotta</div>
+        <div style="font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#B5543B">CEREMONY · STEP 3 OF 4</div>
+      </div>
+    </div>
+
+    <!-- MOOD -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A6A54;margin-bottom:20px">Mood & Atmosphere</div>
+      <div class="opt3-card green-top">
+        <p style="font-size:17px;color:#7A6A54;line-height:1.8;font-style:italic">"An Aesop store in Kyoto — warm, intentional, every surface chosen for a reason. A gallery during private view hours — unhurried, sophisticated, the work speaks for itself. The feeling of opening a new notebook — potential, stillness, the weight of something beginning. Cream doesn't signal weakness — it signals confidence."</p>
+      </div>
+    </div>
+
+    <!-- GALLERY OWNER CALLOUT -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="background:rgba(181,84,59,0.06);border:1px solid rgba(181,84,59,0.2);border-radius:12px;padding:32px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#B5543B;margin-bottom:12px">For the Gallery Owner</div>
+        <p style="font-size:17px;color:#7A6A54;line-height:1.75;">David curates art. His eye is trained to notice composition, balance, negative space, and intentionality. Direction C is the direction designed for that eye — not for the habit tracker market, but for a founder who will look at his own product every day and need it to be something he's genuinely proud of. The serif headings, the warm palette, the editorial spacing — these are the choices of someone who takes aesthetics seriously.</p>
+      </div>
+    </div>
+
+    <!-- REFERENCES -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A6A54;margin-bottom:20px">Reference Products</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div class="opt3-card green-top"><div style="font-size:14px;font-weight:700;color:#2C2416;margin-bottom:8px">Aesop</div><div style="font-size:13px;color:#7A6A54">Warm palette, considered typography, nothing superfluous. Every surface is a decision. Study: how they use whitespace as the primary design element.</div></div>
+        <div class="opt3-card green-top"><div style="font-size:14px;font-weight:700;color:#2C2416;margin-bottom:8px">Are.na</div><div style="font-size:13px;color:#7A6A54">Editorial serenity. Sophisticated content platform that trusts its users. Study: how they use typography to signal intelligence without decoration.</div></div>
+        <div class="opt3-card green-top"><div style="font-size:14px;font-weight:700;color:#2C2416;margin-bottom:8px">The Gentlewoman</div><div style="font-size:13px;color:#7A6A54">Cream + forest green is their signature. Editorial typography at maximum sophistication. Study: how they treat every page as a poster.</div></div>
+      </div>
+    </div>
+
+    <!-- DO/DONT -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A6A54;margin-bottom:20px">Brand Guidelines</div>
+      <div class="do-dont">
+        <div class="do-col">
+          <div class="col-title">DO</div>
+          <ul>
+            <li>Generous whitespace — more than feels comfortable</li>
+            <li>Serif for all headlines, Inter for all UI and labels</li>
+            <li>Terracotta for the Letting Go pathway exclusively</li>
+            <li>Forest green as the primary action colour</li>
+            <li>Grain texture (2% opacity) on backgrounds</li>
+            <li>Editorial image sizes — full-bleed or nothing</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <div class="col-title">DON'T</div>
+          <ul>
+            <li>Use more than 3 colours in any single view</li>
+            <li>Add dark surfaces to light screens — maintain the warmth</li>
+            <li>Use sharp edges — 12px radius minimum</li>
+            <li>Round corners beyond 16px on cards — it becomes soft fintech</li>
+            <li>Use the gold accent decoratively — ceremony and milestones only</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY THIS WINS -->
+    <div style="margin-top:40px" class="fade-up">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A6A54;margin-bottom:20px">Why This Direction</div>
+      <div class="evidence-item"><div class="evidence-num">01</div><div class="evidence-text"><strong>Warm in a cool market is a genuine differentiator</strong>Every dark app feels cold. Every pastel app feels weak. Cream + forest green + warm serif is the only aesthetic that is both sophisticated and warm — a position no competitor currently occupies.</div></div>
+      <div class="evidence-item"><div class="evidence-num">02</div><div class="evidence-text"><strong>Editorial sophistication signals the brand David is building</strong>DreamCoach isn't a habit app. It's a psychological operating system. The design should reflect that ambition — and editorial typography + warm restraint communicates depth that dark apps can't quite reach.</div></div>
+      <div class="evidence-item"><div class="evidence-num">03</div><div class="evidence-text"><strong>Ceremonial framing is uniquely appropriate for the Letting Go feature</strong>A release ceremony deserves a ceremonial aesthetic. When the user arrives at the Letting Go pathway, the warm terracotta background signals: this is different, this matters, this is not just another screen.</div></div>
+    </div>
+
+    <!-- CHOOSE THIS IF -->
+    <div class="choose-section fade-up" style="transition-delay:0.1s">
+      <div class="choose-title">Choose Direction C if…</div>
+      <div class="choose-item"><div class="choose-dot"></div><div class="choose-text">You look at the reference sites above and feel something move. That feeling is recognition — this is your taste, not just a design direction.</div></div>
+      <div class="choose-item"><div class="choose-dot"></div><div class="choose-text">You want DreamCoach to look fundamentally unlike every other app in the wellness space — because you understand that differentiation is a survival strategy.</div></div>
+      <div class="choose-item"><div class="choose-dot"></div><div class="choose-text">You're building this product for the long term — and a design you're genuinely proud of will sustain your motivation and your users' loyalty through the hard months.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#0A0C10;border-top:1px solid rgba(255,255,255,0.06);padding:60px 40px;text-align:center">
+  <div style="font-size:20px;font-weight:700;color:#F0F2F8;margin-bottom:12px">Dream<span style="color:#34D98A">Coach</span> × 3PR</div>
+  <p style="color:#8B90A0;font-size:14px;margin-bottom:24px">Three design directions. One decision. 3PR executes whichever you choose at production quality.</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="#option-1" style="padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;color:#34D98A;border:1px solid rgba(52,217,138,0.3);background:rgba(52,217,138,0.05)">Direction A — Dark Emerald</a>
+    <a href="#option-2" style="padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;color:#C9A84C;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.05)">Direction B — Enhanced ⬡ Recommended</a>
+    <a href="#option-3" style="padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;color:#5C7A4E;border:1px solid rgba(92,122,78,0.3);background:rgba(92,122,78,0.05)">Direction C — Ceremonial</a>
+  </div>
+  <p style="color:#8B90A0;font-size:13px;margin-top:32px">To book the build: lj@3pr.co.uk</p>
+</div>
+
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+}), {threshold:0.08});
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
